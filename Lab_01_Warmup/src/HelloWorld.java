@@ -3,7 +3,9 @@ public class HelloWorld {
       Use the method below to print out hello + your name!
       For example: "Hello Bernardo!"
      */
-
+    public static void main(String[] args) {
+        System.out.println(hello("Xinyu"));
+    }
 
     /**
      * Provides the user a warm welcome!
