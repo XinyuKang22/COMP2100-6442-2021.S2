@@ -1,3 +1,5 @@
+package src;
+
 public class HelloWorld {
     /*
       Use the method below to print out hello + your name!
