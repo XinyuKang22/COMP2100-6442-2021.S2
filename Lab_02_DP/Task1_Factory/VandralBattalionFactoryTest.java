@@ -22,8 +22,8 @@ public class VandralBattalionFactoryTest {
     @Test(timeout = 1000)
     public void noVandralsTest() throws Exception {
         VandralBattalion battalion = VandralBattalionFactory.createVandralBattalion(Difficulty.EASY, 1);
-        assertEquals(battalion, new VandralBattalion(0,0,0,0));
-        assertEquals(battalion.strength(), 0);
+        assertEquals(new VandralBattalion(0,0,0,0), battalion);
+        assertEquals(0, battalion.strength());
     }
 
     @Test(timeout = 1000)

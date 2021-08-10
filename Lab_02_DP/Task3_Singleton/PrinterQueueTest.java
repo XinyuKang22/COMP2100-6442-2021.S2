@@ -25,9 +25,10 @@ public class PrinterQueueTest {
         pQueue.add(paper2);
         pQueue.add(paper3);
 
-        assertEquals(paper3, pQueue.poll());
-        assertEquals(paper2, pQueue.poll());
         assertEquals(paper1, pQueue.poll());
+        assertEquals(paper2, pQueue.poll());
+        assertEquals(paper3, pQueue.poll());
+        assertNull(null, pQueue.poll());
     }
 
     @Test(timeout = 1000)
@@ -41,7 +42,7 @@ public class PrinterQueueTest {
         pQueue1.add(paper1);
         pQueue2.add(paper2);
 
-        assertEquals(paper2, pQueue1.peek());
-        assertEquals(paper2, pQueue2.peek());
+        assertEquals(paper1, pQueue1.peek());
+        assertEquals(paper1, pQueue2.peek());
     }
 }

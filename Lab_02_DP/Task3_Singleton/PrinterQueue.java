@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A queue which processes printing requests for a printer.
+ * A queue (first-in, first-out) which processes printing requests for a printer.
  * Note that there is only ever 1 instance of the queue. Therefore it implements
  *  the singleton design pattern.
  *
@@ -57,7 +57,7 @@ public class PrinterQueue implements SimpleQueue<String> {
 
     /**
      * Returns the element at the top of the queue
-     * @return string at top of queue
+     * @return string at top of queue or returns null if this queue is empty.
      */
     @Override
     public String peek() {
@@ -67,7 +67,7 @@ public class PrinterQueue implements SimpleQueue<String> {
 
     /**
      * Removes and returns the top element of the queue
-     * @return String at the top of the queue
+     * @return String at the top of the queue or returns null if this queue is empty.
      */
     @Override
     public String poll() {
