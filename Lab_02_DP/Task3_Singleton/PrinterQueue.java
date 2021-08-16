@@ -46,7 +46,7 @@ public class PrinterQueue implements SimpleQueue<String> {
     }
 
     /**
-     * Adds to the top of the print queue
+     * Adds element to the end of the print queue
      * @return true if successful, false otherwise.
      */
     @Override
@@ -56,8 +56,8 @@ public class PrinterQueue implements SimpleQueue<String> {
     }
 
     /**
-     * Returns the element at the top of the queue
-     * @return string at top of queue or returns null if this queue is empty.
+     * Returns the element at the front of the queue
+     * @return string at the front of queue or returns null if this queue is empty.
      */
     @Override
     public String peek() {
@@ -66,8 +66,8 @@ public class PrinterQueue implements SimpleQueue<String> {
     }
 
     /**
-     * Removes and returns the top element of the queue
-     * @return String at the top of the queue or returns null if this queue is empty.
+     * Removes and returns the element at the front of the queue
+     * @return String at the front of the queue or returns null if this queue is empty.
      */
     @Override
     public String poll() {

@@ -40,8 +40,8 @@ public class Location implements Subject {
     }
 
     /**
-     * Removes a user from attendees. (Could be for a whole host of reasons).
-     * @param userId Id of user to remove.
+     * Removes the attendance log which contains the provided observer.
+     * @param Observer to remove
      */
     public void detach(Observer observer) {
         // TODO: write this method so that it removes the user from the list of attendees (removes the attendee)

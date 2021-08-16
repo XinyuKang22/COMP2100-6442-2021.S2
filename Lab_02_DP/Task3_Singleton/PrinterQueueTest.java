@@ -28,7 +28,7 @@ public class PrinterQueueTest {
         assertEquals(paper1, pQueue.poll());
         assertEquals(paper2, pQueue.poll());
         assertEquals(paper3, pQueue.poll());
-        assertNull(null, pQueue.poll());
+        assertNull(pQueue.poll());
     }
 
     @Test(timeout = 1000)
