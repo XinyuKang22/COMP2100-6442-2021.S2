@@ -1,3 +1,5 @@
+package Task1_MarkCalculator;
+
 public class MarkCalculator15 implements MarkCalculator {
 
     public MarkGrade calculateMark(int lab, int assignment1, int assignment2,

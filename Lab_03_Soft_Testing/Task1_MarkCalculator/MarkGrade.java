@@ -1,3 +1,4 @@
+package Task1_MarkCalculator;
 
 public class MarkGrade {
 	

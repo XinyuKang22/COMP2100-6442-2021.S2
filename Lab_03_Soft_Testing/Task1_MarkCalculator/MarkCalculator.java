@@ -1,3 +1,5 @@
+package Task1_MarkCalculator;
+
 /**
  * The calculateMark method must return the MarkGrade based on the following:
  * 
