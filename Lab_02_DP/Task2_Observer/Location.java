@@ -29,6 +29,9 @@ public class Location implements Subject {
     public void incTicks(int inc) {
         // TODO: write this method so that it increments 'tick' for each attendance log
         // Hint: look into and read the class AttendanceLog
+        for (AttendanceLog attendanceLog : attendanceLogs){
+            attendanceLog.incTick(inc);
+        }
     }
 
     /**
@@ -45,6 +48,7 @@ public class Location implements Subject {
      */
     public void detach(Observer observer) {
         // TODO: write this method so that it removes the user from the list of attendees (removes the attendee)
+        attendanceLogs.removeIf(attendanceLog -> attendanceLog.getObserver().equals(observer));
     }
 
     /**
@@ -56,7 +60,11 @@ public class Location implements Subject {
         Please note that the tick value '0' represents the current time period.
         Hint: all observers already have an 'update()' method.
          */
-
+        for (AttendanceLog attendanceLog : attendanceLogs){
+            if (attendanceLog.getTick() <= 4){
+                attendanceLog.getObserver().update();
+            }
+        }
     }
 
     /**
