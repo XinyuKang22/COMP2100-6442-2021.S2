@@ -28,6 +28,7 @@ public class PrinterQueue implements SimpleQueue<String> {
     private List<String> queue = new ArrayList<>();
 
     // TODO: store an instance of the printer queue.
+    private static PrinterQueue instance = null;
 
     /**
      * Private constructor so it can only be accessed from within the class
@@ -42,7 +43,10 @@ public class PrinterQueue implements SimpleQueue<String> {
          TODO: implement this method
          Note that you will need to create an instance of PrinterQueue.
          */
-        return null;
+        if (instance == null){
+            instance = new PrinterQueue();
+        }
+        return instance;
     }
 
     /**
@@ -52,7 +56,12 @@ public class PrinterQueue implements SimpleQueue<String> {
     @Override
     public boolean add(String paper) {
         // TODO: implement this method
-        return false;
+        try {
+            queue.add(paper);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -62,7 +71,10 @@ public class PrinterQueue implements SimpleQueue<String> {
     @Override
     public String peek() {
         // TODO: implement this method
-        return null;
+        if (queue.isEmpty()){
+            return null;
+        }
+        return queue.get(0);
     }
 
     /**
@@ -72,6 +84,11 @@ public class PrinterQueue implements SimpleQueue<String> {
     @Override
     public String poll() {
         // TODO: implement this method
-        return null;
+        if (queue.isEmpty()){
+            return null;
+        }
+        String firstTask =  queue.get(0);
+        queue.remove(0);
+        return firstTask;
     }
 }
