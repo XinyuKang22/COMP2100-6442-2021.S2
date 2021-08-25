@@ -1,3 +1,5 @@
+package Task2_Coverage;
+
 public class BranchComplete {
     public enum Action {
         ABDUCT, PET, CRY, SMILE

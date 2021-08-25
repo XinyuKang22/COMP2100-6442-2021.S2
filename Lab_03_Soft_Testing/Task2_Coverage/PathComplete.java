@@ -1,3 +1,5 @@
+package Task2_Coverage;
+
 public class PathComplete {
 
 	/*

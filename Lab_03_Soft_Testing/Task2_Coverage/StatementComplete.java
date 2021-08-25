@@ -1,3 +1,5 @@
+package Task2_Coverage;
+
 public class StatementComplete {
     /**
      * The following method sums the number of items from 1 to n
