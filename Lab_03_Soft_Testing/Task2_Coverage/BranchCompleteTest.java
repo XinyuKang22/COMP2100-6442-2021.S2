@@ -21,7 +21,10 @@ public class BranchCompleteTest {
     public void attemptToMakeFriendTest() {
         // Implement your test cases
         // START YOUR CODE
-
+        assertEquals(BranchComplete.Action.ABDUCT,BranchComplete.attemptToMakeFriend("42"));
+        assertEquals(BranchComplete.Action.CRY,BranchComplete.attemptToMakeFriend(""));
+        assertEquals(BranchComplete.Action.SMILE,BranchComplete.attemptToMakeFriend("ok"));
+        assertEquals(BranchComplete.Action.PET,BranchComplete.attemptToMakeFriend("wolf"));
         // END YOUR CODE
     }
 }

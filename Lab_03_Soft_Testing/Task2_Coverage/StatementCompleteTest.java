@@ -27,8 +27,7 @@ public class StatementCompleteTest {
     public void sumAndMultiplyTest() {
         // Implement your test cases
         // START YOUR CODE
-
-
+        assertEquals(1,StatementComplete.sumAndMultiply(1));
         // END YOUR CODE
     }
 }
