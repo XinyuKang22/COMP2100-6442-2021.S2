@@ -48,6 +48,19 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
         return leftNode.getHeight() - rightNode.getHeight();
     }
 
+    public AVLTree<T> simpleInsert(T element){
+        if (element == null)
+            throw new IllegalArgumentException("Input cannot be null");
+
+        if (element.compareTo(value) > 0) {
+            return new AVLTree<>(value,leftNode,rightNode.insert(element));
+        } else if (element.compareTo(value) < 0) {
+            return new AVLTree<>(value,leftNode.insert(element),rightNode);
+        } else {
+            return this;
+        }
+    }
+
     @Override
     public AVLTree<T> insert(T element) {
         /*
@@ -60,15 +73,23 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
         if (element == null)
             throw new IllegalArgumentException("Input cannot be null");
 
-        if (element.compareTo(value) > 0) {
-            // COMPLETE
-        } else if (element.compareTo(value) < 0) {
-            // COMPLETE
-        } else {
-            // COMPLETE
+        AVLTree<T> preTree = simpleInsert(element);
+        if (preTree.getBalanceFactor()>1){
+            AVLTree<T> subLeftTree = (AVLTree<T>) preTree.leftNode;
+            if (subLeftTree.getBalanceFactor() == -1){
+                preTree = new AVLTree<>(preTree.value,subLeftTree.leftRotate(),preTree.rightNode);
+            }
+            return preTree.rightRotate();
+
+        }else if (preTree.getBalanceFactor()<-1){
+            AVLTree<T> subRightTree = (AVLTree<T>) preTree.rightNode;
+            if (subRightTree.getBalanceFactor() == 1){
+                preTree = new AVLTree<>(preTree.value,preTree.leftNode,subRightTree.rightRotate());
+            }
+            return preTree.leftRotate();
         }
 
-        return this; // Change to return something different
+        return preTree; // Change to return something different
     }
 
     /**
@@ -94,10 +115,8 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
          */
 
         Tree<T> newParent = this.rightNode;
-        Tree<T> newRightOfCurrent = newParent.leftNode;
-        // COMPLETE
-
-        return null; // Change to return something different
+        this.rightNode = newParent.leftNode;
+        return new AVLTree<>(newParent.value,this,newParent.rightNode); // Change to return something different
     }
 
     /**
@@ -121,8 +140,9 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
             (AVLTree$EmptyAVL and AVLTree are in unnamed module of loader 'app')'
             than something about your code is incorrect!
          */
-
-        return null; // Change to return something different
+        Tree<T> newParent = this.leftNode;
+        this.leftNode = newParent.rightNode;
+        return new AVLTree<>(newParent.value,newParent.leftNode,this);
     }
 
     /**
