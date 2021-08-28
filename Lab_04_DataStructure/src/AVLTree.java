@@ -1,3 +1,4 @@
+package src;
 /**
  * Welcome! Make sure to check out 'readme.md' for a rundown of requirements/description of this implementation
  * that may differ from normal implementations. Before starting, it may also be worth checking out Tree.java
