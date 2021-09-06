@@ -230,6 +230,11 @@ public class BTree<T extends Comparable<T>> {
          * @return minimum key of the BTree
          */
         public T min() {
+            // Ensure that the BTreeNode is not empty (note that if there are no keys, then there can't be children).		
+            if (this.keys.size() == 0) {		
+                return null;		
+            }		
+
             // Check if leaf
             if (this.children.size() == 0) {
                 // Return minimum value (should be left most).
