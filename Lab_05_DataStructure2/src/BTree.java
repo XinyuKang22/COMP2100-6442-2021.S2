@@ -52,8 +52,13 @@ public class BTree<T extends Comparable<T>> {
         if (key == null)
             throw new IllegalArgumentException("Input cannot be null");
 
-
+        BTreeNode upRoot = new BTreeNode();
+        root.parent = upRoot;
+        upRoot.children.add(root);
         root.insert(key);   // Feel free to replace this.
+        if (upRoot.keys.size()>0){
+            root = upRoot;
+        }
     }
 
     /**
@@ -90,10 +95,48 @@ public class BTree<T extends Comparable<T>> {
         this.addInOrder(node.keys, medValue);
 
         // TODO: get an array of everything right of the median.
-
+        LimitedArrayList<T> rightArray = childToSplit.keys.get(med+1,childToSplit.keys.size());
+        BTreeNode rightNode = new BTreeNode();
+        rightNode.keys = rightArray;
         // TODO: get an array of everything left of the median.
-
+        LimitedArrayList<T> leftArray = childToSplit.keys.get(0,med);
+        BTreeNode leftNode = new BTreeNode();
+        leftNode.keys = leftArray;
         // TODO: think of and write the rest of the split method. You may also choose to re-write the above.
+        int sizeOfCurrentsChildren = childToSplit.children.size();
+        if (sizeOfCurrentsChildren > 0){
+            leftNode.setChildren(childToSplit.children.get(0,med+1));
+            rightNode.setChildren(childToSplit.children.get(med+1,sizeOfCurrentsChildren));
+        }
+
+        int sizeOfNodesChildren = node.children.size();
+        int indexOfCurrent = node.children.indexOf(childToSplit);
+        LimitedArrayList<BTreeNode> newChildren = new LimitedArrayList<>(node.children.getCapacity());
+        if (sizeOfNodesChildren == 1){
+            newChildren.add(leftNode);
+            newChildren.add(rightNode);
+        }else {
+            if (indexOfCurrent == 0){
+                newChildren.add(leftNode);
+                newChildren.add(rightNode);
+                newChildren.addAll(node.children.get(1,node.children.size()));
+            }else if (indexOfCurrent == node.children.size()-1){
+                newChildren.addAll(node.children.get(0,node.children.size()-1));
+                newChildren.add(leftNode);
+                newChildren.add(rightNode);
+            }else {
+                newChildren.addAll(node.children.get(0,indexOfCurrent));
+                newChildren.add(leftNode);
+                newChildren.add(rightNode);
+                newChildren.addAll(node.children.get(indexOfCurrent+1,node.children.size()));
+            }
+        }
+
+        node.setChildren(newChildren);
+
+        if (node.keys.size() > order -1){
+            split(node.parent,node);
+        }
     }
 
     /**
@@ -164,7 +207,7 @@ public class BTree<T extends Comparable<T>> {
          */
         private LimitedArrayList<T> keys;               // Keys held by the node.
         private LimitedArrayList<BTreeNode> children;   // Children of the node.
-
+        private BTreeNode parent;
         /**
          * Constructor which initialises the fields.
          * <p>
@@ -195,6 +238,13 @@ public class BTree<T extends Comparable<T>> {
             this.children = new LimitedArrayList<>(order + 1);
         }
 
+        private void setChildren(LimitedArrayList<BTreeNode> childrenList){
+            this.children = childrenList;
+            for (BTreeNode child:childrenList){
+                child.parent = this;
+            }
+        }
+
         /**
          * Adds a key to the node. Splitting if necessary.
          *
@@ -211,7 +261,26 @@ public class BTree<T extends Comparable<T>> {
             // Ensure input is not null.
             if (key == null)
                 throw new IllegalArgumentException("Input cannot be null");
+            if (this.children.size() == 0){
+                addInOrder(this.keys,key);
+                if (this.keys.size()>order-1){
+                    split(parent,this);
+                }
+            }else {
+                if (key.compareTo(this.keys.get(this.keys.size()-1))>0){
+                    this.children.get(this.children.size()-1).insert(key);
+                }else {
+                    int i = 0;
+                    while (i<this.keys.size()){
+                        if (key.compareTo(this.keys.get(i))<0){
+                            this.children.get(i).insert(key);
+                            break;
+                        }
+                        i++;
+                    }
+                }
 
+            }
         }
 
         /**
@@ -222,8 +291,14 @@ public class BTree<T extends Comparable<T>> {
                 Task 2.
                 TODO: complete this method.
              */
-
-            return this.keys.get(0); // Replace this
+            if (this.keys.size() == 0){
+                return null;
+            }
+            if (this.children.size() == 0){
+                return this.keys.get(this.keys.size()-1);
+            }else {
+                return this.children.get(this.children.size() - 1).max();
+            }
         }
 
         /**
