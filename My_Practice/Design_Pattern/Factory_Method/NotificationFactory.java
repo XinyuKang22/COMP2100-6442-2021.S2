@@ -1,5 +1,3 @@
-package Design_Pattern.Factory_Method;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
