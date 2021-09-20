@@ -40,50 +40,51 @@ public class VandralBattalionFactory {
         // If you are unsure of where to start, write your factory code below.
         // Keep in mind that you may use helper methods or edit this class as you please.
 
-        int muggles = 0;
-        int healers = 0;
-        int lowArchons = 0;
-        int highArchons = 0;
         int count_muggles = 0;
         int count_lowArchons = 0;
         int count_highArchons = 0;
+        ArmyFactory armyFactory = new ArmyFactory();
+        Army muggleArmy = armyFactory.createArmy(ArmyType.Muggle);
+        Army healerArmy = armyFactory.createArmy(ArmyType.Healer);
+        Army lowArchonArmy = armyFactory.createArmy(ArmyType.Low_Archon);
+        Army highArchonArmy = armyFactory.createArmy(ArmyType.High_Archon);
 
         int x = difficulty.equals(Difficulty.EASY) ? 2:1;
         int y = difficulty.equals(Difficulty.EASY) ? 5:2;
 
         for (int i = 1; i <= playerLevel; i ++){
             if (i % x == 0){
-                muggles = muggles + 1;
+                muggleArmy.add(1);
                 count_muggles = count_muggles +1;
             }
 
             if (i % y == 0){
                 if (i <= 75){
-                    lowArchons = lowArchons +1;
+                    lowArchonArmy.add(1);
                     count_lowArchons = count_lowArchons +1;
                 }else if (i > 76){
-                    highArchons = highArchons +1;
+                    highArchonArmy.add(1);
                     count_highArchons = count_highArchons +1;
                 }
             }
 
             if (count_muggles >= 20){
-                healers = healers +1;
+                healerArmy.add(1);
                 count_muggles = count_muggles -20;
             }
             if (count_lowArchons >= 3){
-                healers = healers +1;
+                healerArmy.add(1);
                 count_lowArchons = count_lowArchons -3;
             }
             if (count_highArchons >= 1){
-                healers = healers +1;
+                healerArmy.add(1);
                 count_highArchons = count_highArchons -1;
             }
         }
 
 
         // The following code is just here to prevent an error with regards to the method's promise to return something. Delete it when you start coding.
-        return new VandralBattalion(muggles,healers,lowArchons,highArchons);
+        return new VandralBattalion(muggleArmy.getCount(),healerArmy.getCount(),lowArchonArmy.getCount(),highArchonArmy.getCount());
 
         // If you are unsure of where to start, write your factory code above.
     }
