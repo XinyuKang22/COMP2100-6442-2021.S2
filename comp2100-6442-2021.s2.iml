@@ -8,13 +8,15 @@
       <sourceFolder url="file://$MODULE_DIR$/Lab_03_Soft_Testing" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Lab_04_DataStructure" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Lab_05_DataStructure2/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/PrepQuestionsMidTerm/Q5" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/PrepQuestionsMidTerm/Q6" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/DAO_Method" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Facade_Method" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Factory_Method" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Iterator_Method" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Observer_Method" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Singleton_Method" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/State_Method" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Template Method" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/PrepQuestionsMidTerm/Q7" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

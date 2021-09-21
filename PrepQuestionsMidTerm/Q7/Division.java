@@ -9,9 +9,10 @@ public class Division extends Operation {
 	public double evaluate() {
 
 		//START YOUR CODE
-
-
-
+		if (b == 0){
+			throw new ArithmeticException();
+		}
+		return a / b;
 		//END YOUR CODE
 	}
 }

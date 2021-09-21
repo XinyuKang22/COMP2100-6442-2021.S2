@@ -16,8 +16,7 @@ public class RBTree<T extends Comparable<T>> {
 	 */
 	public boolean testProp1() {
 		// START YOUR CODE
-		
-		return false; //you are allowed to change this return statement
+		return root.colour == Colour.BLACK && root.ifLeafBlack();
 		// END YOUR CODE
 	}
 
@@ -27,8 +26,7 @@ public class RBTree<T extends Comparable<T>> {
 	 */
 	public boolean testProp2() {
 		// START YOUR CODE
-		
-		return false; //you are allowed to change this return statement
+		return root.isColourCorrect();
 		// END YOUR CODE
 	}
 
@@ -149,6 +147,35 @@ public class RBTree<T extends Comparable<T>> {
 
 		public void setColour(boolean red) {
 			this.colour = red ? Colour.RED : Colour.BLACK;
+		}
+
+		public boolean ifLeafBlack(){
+			if (left == null && right == null){
+				return colour == Colour.BLACK;
+			}else if (left == null && right != null){
+				return right.ifLeafBlack();
+			}else if (left != null && right == null){
+				return left.ifLeafBlack();
+			}else {
+				return left.ifLeafBlack() && right.ifLeafBlack();
+			}
+		}
+
+		public boolean isColourCorrect(){
+			if (colour == Colour.RED){
+				if (parent == null || parent.colour != Colour.BLACK){
+					return false;
+				}
+			}
+			if (left == null && right == null){
+				return true;
+			}else if (left == null && right != null){
+				return right.isColourCorrect();
+			}else if (left != null && right == null){
+				return left.isColourCorrect();
+			}else {
+				return left.isColourCorrect() && right.isColourCorrect();
+			}
 		}
 	}
 	

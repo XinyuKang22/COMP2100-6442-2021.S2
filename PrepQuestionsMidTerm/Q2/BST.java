@@ -12,7 +12,9 @@ public class BST {
 	 */
 	public Integer evenNodeSum() {
 		// START YOUR CODE
-		
+		if (root != null){
+			return root.evenNodeSum();
+		}
 		return null; //you are allowed to change this return statement
 		// END YOUR CODE
 	}
@@ -70,6 +72,18 @@ public class BST {
 			this.parent = null;
 			this.left = null;
 			this.right = null;
+		}
+
+		public Integer evenNodeSum(){
+			if (left == null && right == null){
+				return value;
+			}else if (left != null && right == null){
+				return left.evenNodeSum();
+			}else if (left == null && right != null){
+				return right.evenNodeSum();
+			}else {
+				return value + left.evenNodeSum() + right.evenNodeSum();
+			}
 		}
 	}
 }

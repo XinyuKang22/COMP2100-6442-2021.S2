@@ -16,7 +16,14 @@ public class BST {
 	 */
 	public String DNAGenerator(Integer key) {
 		// START YOUR CODE
-		
+		Node n = find(root,key);
+		if (n == null){
+			return "CGTA";
+		}
+		String dna = n.DNAGenerator();
+		if (!dna.isEmpty()){
+			return dna;
+		}
 		return null;// You are allowed to remove or change this default return value
 		// END YOUR CODE
 	}

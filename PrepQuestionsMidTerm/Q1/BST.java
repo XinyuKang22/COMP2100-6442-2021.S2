@@ -13,7 +13,9 @@ public class BST {
 	 */
 	public Integer oddNodeSum() {
 		// START YOUR CODE
-		
+		if (root != null){
+			return root.oddNodeSum();
+		}
 		return null; //you are allowed to change this return statement
 		// END YOUR CODE
 	}
@@ -71,6 +73,18 @@ public class BST {
 			this.parent = null;
 			this.left = null;
 			this.right = null;
+		}
+
+		public Integer oddNodeSum(){
+			if (left != null && right != null){
+				return left.oddNodeSum() + right.oddNodeSum();
+			}else if (left == null && right != null){
+				return value + right.oddNodeSum();
+			}else if (left != null && right == null){
+				return value + left.oddNodeSum();
+			}else {
+				return 0;
+			}
 		}
 	}
 }

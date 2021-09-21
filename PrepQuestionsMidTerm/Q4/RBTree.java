@@ -17,8 +17,8 @@ public class RBTree<T extends Comparable<T>> {
 	 */
 	public boolean testProp3() {
 		// START YOUR CODE
-		
-		return false; //you are allowed to change this return statement
+
+		return root.isPathSame();
 		// END YOUR CODE
 	}
 
@@ -132,6 +132,21 @@ public class RBTree<T extends Comparable<T>> {
 		// Return the number of black nodes between this node and root (inclusive)
 		public int blackParentCount() {
 			return this.parent == null ? 1 : ((this.colour == Colour.BLACK ? 1 : 0) + this.parent.blackParentCount());
+		}
+
+		// assume this is a root node
+		public boolean isPathSame(){
+			if (left == null && right == null){
+				return true;
+			}
+			List<Node<E>> leaves = this.childrenLeaves();
+			int countBlack = leaves.get(0).blackParentCount();
+			for (Node<E> leaf : leaves) {
+				if (leaf.blackParentCount() != countBlack) {
+					return false;
+				}
+			}
+			return true;
 		}
 
 		public Node(E value) {

@@ -12,4 +12,16 @@ public class Node {
         this.left = null;
         this.right = null;
     }
+
+    public String DNAGenerator(){
+        if (left == null && right == null){
+            return "";
+        }else if (left == null && right != null){
+            return value + right.DNAGenerator();
+        }else if (left != null && right == null){
+            return value + left.DNAGenerator();
+        }else {
+            return left.DNAGenerator() + right.DNAGenerator();
+        }
+    }
 }
