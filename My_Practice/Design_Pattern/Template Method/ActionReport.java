@@ -9,7 +9,7 @@ import java.util.Map;
 
 public abstract class ActionReport {
 
-    // read data from filr and return it as String
+    // read data from file and return it as String
     public String readData(String filePath) throws IOException {
         Path path = Paths.get(filePath);
         byte[] bytes = Files.readAllBytes(path);
