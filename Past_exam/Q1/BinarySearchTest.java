@@ -1,3 +1,8 @@
+import org.junit.Before;
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
+
 /**
  * These test cases are provided to assist your implementation.
  * However, note that these test cases may not be used in actual marking.
@@ -5,10 +10,7 @@
  * of your implementation.
  */
 
-import org.junit.Before;
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 
 public class BinarySearchTest {
     Element<Integer>[][] testMatrix;

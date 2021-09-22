@@ -18,7 +18,9 @@
       <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Template Method" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/My_Practice/Q1" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PrepQuestionsMidTerm/Q7" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/midterm-code/midterm-code/Q1" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Past_exam/Q1" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Past_exam/Q2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Past_exam/Q3" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
