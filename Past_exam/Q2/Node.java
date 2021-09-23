@@ -79,34 +79,29 @@ public class Node<T extends Comparable<T>> {
 		if (uncle == null){
 			return;
 		}
-		// case 1 & 4
+
 		if (uncle.colour == Colour.RED){
 			this.parent.colour = Colour.BLACK;
 			this.getUncle().colour = Colour.BLACK;
 			this.parent.parent.colour = Colour.RED;
 			this.parent.parent.checkProperty();
-		}else if (uncle.colour == Colour.BLACK){
-
-			if (this.parent.isLeft()){
-				if (!this.isLeft()){
-					// case 2
-					this.parent.leftRotate().left.checkProperty();
-				}else if (this.isLeft()){
-					// case 3
-					this.parent.colour = Colour.BLACK;
-					this.parent.parent.colour = Colour.RED;
-					this.parent.parent.rightRotate();
-				}
-			}else if (!this.parent.isLeft()){
-				if (!this.isLeft()){
-					// case 5
-					this.parent.colour = Colour.BLACK;
-					this.parent.parent.colour = Colour.RED;
-					this.parent.parent.leftRotate();
-				}else if (this.isLeft()){
-					// case 6
-					this.parent.rightRotate().right.checkProperty();
-				}
+			return;
+		}
+		if (this.parent.isLeft()){
+			if (this.isLeft()){
+				this.parent.colour = Colour.BLACK;
+				this.parent.parent.colour = Colour.RED;
+				this.parent.parent.rightRotate();
+			}else {
+				this.parent.leftRotate().left.checkProperty();
+			}
+		} else{
+			if (this.isLeft()){
+				this.parent.rightRotate().right.checkProperty();
+			} else {
+				this.parent.colour = Colour.BLACK;
+				this.parent.parent.colour = Colour.RED;
+				this.parent.parent.leftRotate();
 			}
 		}
 	}
