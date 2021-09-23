@@ -1,38 +1,28 @@
-# Specifics/Description of Implementations
-The aim of this document is to provide you with a quick overview of the of this implementation of trees, BSTs and AVL trees. Certain attributes are mentioned to prevent any confusion, such as whether the left child or right child are greater than the current node's value.
+The given code realises the delivery process of a parcel from a sender in location `A` to a recipient in location `B`.
+A successful delivery will sequentially go through the following four status:
+* `Ordered` online
+* `Registered` in a post office
+* `In Transit` via the transport office
+* `Delivered` to the designated recipient
 
-Anything not mentioned here can be assumed to be the same as a typical tree structure definition. E.g. each tree has a left and right child, for the AVL tree: rotation is necessary to maintain balance, etc.
+Note that there is only `ONE` transport office so that a `singleton` instance is required.
+There are three available options for the transport: `Air carrier`, `Train`, `Van` from A to B, where Cost(aircarrier) > Cost(train) > Cost(van) for the same parcel:
+* `Air Carrier` can transit a parcel with at maximum `22` (inclusive) weight units in `3` days.
+* `Train` can transit a parcel in `6` days and has no limitation on the parcel weights.
+* `Van` can transit a parcel with at maximum `40` (inclusive) weight units in `8` days.
 
-## Tree Implementation
-<b>Immutable</b><br>
-The tree is an immutable implementation. That is, the state of the object cannot be modified after it is created. What this means in the context of your 'insert' code is that you must change the reference to the object, not the object itself!
+Note that the transport office is benefit-driven and will try to save the cost as much as possible. It will choose a transport based on `weight` and `allowedDays` properties of a parcel:
+* `weight`: the weight of the parcel
+* `allowedDays`: the maximum allowed days for the parcel to be delivered
+* `sender`: the sender of the parcel
+* `recipient`: the recipient of the parcel
 
-<b>Empty Trees</b><br>
-Leaf nodes are an instance of 'EmptyTree' as defined by the class extending the Tree interface.
+For example, if a parcel has 17 weight units and must be delivered in at most 6 days, then the transport office will choose the train to transport the parcel. If no transports meet the requirements of the parcel, then the parcel will be `Returned` to the sender. Note that the parcel will only be delivered if the recipient is the CORRECT one recorded in the parcel. Otherwise, the parcel will be returned.
 
-## Binary Search Tree Implementation
-Inherits all implementation requirements of Tree.
+Please refer to the test cases in `ParcelTest.java` for more details.
 
-<b>Sorted</b><br>
-The values of the all left children of the current node are less than the current node's value.<br>
-The values of the all right children of the current node are greater than the current node's value.
+You are expected to complete:
+* `transitBy()` and `getInstance()` methods in `TransportOffice.java` file
+* `receive()` method in `Recipient.java` file
 
-<b>Left Insertion Preference</b><br>
-***WARNGING: only for BST, AVL-Tree handles duplicates differently.*** <br>
-If the element being inserted is equal to the current node value: insert to the left of the node.
-
-## AVL Tree Implementation
-Inherits all implementation requirements of Binary Search Tree with the following exceptions:
-- Left Insertion Preference.
-
-<b>Balance Factor</b><br>
-The balance factor is the height difference between the left and right subtrees of the current node. It will be defined as:<br>
-Balance factor = height(left subtree) - height(right subtree)<br>
-The balance factor for any node must be between -1 and 1.
-
-<b>No Duplicates</b><br>
-The AVL-Tree implementation does not add duplicate values. This is the same approach to duplicates as sets. <br>
-For example:
-<br>
-If we insert the values: 1, 2, 3 and 1. <br>
-The tree should only contain: 1, 2 and 3. The last insertion is a duplicate (1) and is not added again.
+Upload `TransportOffice.java` and `Recipient.java` to Wattle for marking. You are allowed to create helper methods in the required java classes. You are only allowed to implement your code in the designated area between "START YOUR CODE" and "END YOUR CODE". Some test cases are provided to assist your understanding, but it does not guarantee you will get full marks. Remember that we use different test cases to mark your solution. You are free to add your own test cases to increase your confidence that your solution is robust.
