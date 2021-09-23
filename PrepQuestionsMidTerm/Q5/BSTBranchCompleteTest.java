@@ -15,7 +15,9 @@ public class BSTBranchCompleteTest {
 
 		// START YOUR CODE
 		//HINT: assertEquals(xx, bc.DNATreeCalc(xx, xx, xx));
-		
+		assertEquals(208+50, bc.DNATreeCalc(300, 400, 50));
+		assertEquals(208+300, bc.DNATreeCalc(300, 100, 200));
+		assertEquals(0, bc.DNATreeCalc(100, 200, 300));
 		// END YOUR CODE
 	}
 }
