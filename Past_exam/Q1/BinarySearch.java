@@ -29,16 +29,12 @@ public class BinarySearch<T extends Comparable<T>>{
         tracker.calltracking(minX,maxX,minY,maxY); //Do not modify this method. Otherwise, your answers may not be marked correctly
         // TODO: Complete this method
         // START YOUR CODE
-        int m = A.length;
-        int n = A[0].length;
-        int i = m - 1, j = 0;
-        while (i >= 0 && j < n) {
-            if (A[i][j].key.compareTo(target)==0) {
-                return A[i][j];
-            } else if (A[i][j].key.compareTo(target)<0) {
-                i--;
-            } else {
-                j++;
+        for (int i = minX; i <= maxX; i ++){
+            for (int j = minY; j <= maxY; j ++){
+                T key = A[i][j].key;
+                if (key.equals(target)){
+                    return A[i][j];
+                }
             }
         }
         return null;

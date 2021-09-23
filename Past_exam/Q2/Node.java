@@ -30,6 +30,135 @@ public class Node<T extends Comparable<T>> {
 		this.colour = Colour.BLACK; //leaf nodes are always black
 	}
 
+	public void replaceBy(Node<T> node){
+		if (node == null || node.key == null){
+			this.key = null;
+			this.colour = Colour.BLACK;
+			return;
+		}
+		this.key = node.key;
+		this.colour = node.colour;
+		this.left = node.left;
+		this.right = node.right;
+		this.left.parent = this;
+		this.right.parent = this;
+	}
+
+	public Node<T> search(Interval<T> key) {
+		if (this.key == null){
+			return null;
+		}
+		int compare = this.key.compareTo(key);
+		if (compare == 0){
+			return this;
+		}else if (compare < 0){
+			return this.left.search(key);
+		}else if (compare > 0){
+			return this.right.search(key);
+		}
+		return null;
+	}
+
+	public void insert(Node<T> node) {
+		// assume node is only a node, not a subtree
+		if (this.key == null){
+			this.replaceBy(node);
+			this.checkProperty();
+			return;
+		}
+		int compare = this.key.compareTo(node.key);
+		if (compare < 0){
+			this.left.insert(node);
+		}else if (compare > 0){
+			this.right.insert(node);
+		}
+	}
+
+	public void checkProperty(){
+		Node<T> uncle = this.getUncle();
+		if (uncle == null){
+			return;
+		}
+		// case 1 & 4
+		if (uncle.colour == Colour.RED){
+			this.parent.colour = Colour.BLACK;
+			this.getUncle().colour = Colour.BLACK;
+			this.parent.parent.colour = Colour.RED;
+			this.parent.parent.checkProperty();
+		}else if (uncle.colour == Colour.BLACK){
+
+			if (this.parent.isLeft()){
+				if (!this.isLeft()){
+					// case 2
+					this.parent.leftRotate().left.checkProperty();
+				}else if (this.isLeft()){
+					// case 3
+					this.parent.colour = Colour.BLACK;
+					this.parent.parent.colour = Colour.RED;
+					this.parent.parent.rightRotate();
+				}
+			}else if (!this.parent.isLeft()){
+				if (!this.isLeft()){
+					// case 5
+					this.parent.colour = Colour.BLACK;
+					this.parent.parent.colour = Colour.RED;
+					this.parent.parent.leftRotate();
+				}else if (this.isLeft()){
+					// case 6
+					this.parent.rightRotate().right.checkProperty();
+				}
+			}
+		}
+	}
+
+	public boolean isLeft(){
+		if (this.parent.key == null){
+			return false;
+		}
+		return this.parent.left.equals(this);
+	}
+
+	public Node<T> leftRotate(){
+		Node<T> x = new Node<>();
+		x.replaceBy(this);
+		Node<T> y = new Node<>();
+		y.replaceBy(x.right);
+		x.right.replaceBy(y.left);
+		y.left.replaceBy(x);
+		this.replaceBy(y);
+		return this;
+	}
+
+	public Node<T> rightRotate(){
+		Node<T> x = new Node<>();
+		x.replaceBy(this);
+		Node<T> y = new Node<>();
+		y.replaceBy(x.left);
+		x.left.replaceBy(y.right);
+		y.right.replaceBy(x);
+		this.replaceBy(y);
+		return this;
+	}
+
+	public Node<T> getUncle(){
+		if (this == null || this.key == null){
+			return null;
+		}
+		if (this.parent == null || this.parent.key == null ){
+			return null;
+		}
+		if (this.parent.parent == null || this.parent.parent.key == null){
+			return null;
+		}
+		if (this.parent.equals(this.parent.parent.left)){
+			return this.parent.parent.right;
+		}else if (this.parent.equals(this.parent.parent.right)){
+			return this.parent.parent.left;
+		}
+		return null;
+	}
+
+
 	// For a pair of intervals i1, i2, we write i1 < i2, if
 	//(1)	i1. startTime < i2. startTime, or
 	//(2)	i1. startTime = i2. startTime, and i1. endTime < i2.endTime
@@ -39,6 +168,20 @@ public class Node<T extends Comparable<T>> {
 		public Interval(T startTime, T endTime) {
 			this.startTime = startTime;
 			this.endTime = endTime;
+		}
+
+		public int compareTo(Interval<T> i2){
+			Interval<T> i1 = this;
+			int startCompare = i1.startTime.compareTo(i2.startTime);
+			int endCompare = i1.endTime.compareTo(i2.endTime);
+			if (startCompare == 0){
+				return endCompare;
+			}
+			return startCompare;
+		}
+
+		public String toString(){
+			return "["+startTime+","+endTime+"]";
 		}
 	}
 }

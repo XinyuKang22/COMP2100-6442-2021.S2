@@ -36,7 +36,12 @@ public class RBTree<T extends Comparable<T>> {
 
 		// TODO: Complete this method
 		// START YOUR CODE
-
+		if (this.root == null){
+			this.root = node;
+			this.root.colour = Colour.BLACK;
+		}else {
+			this.root.insert(node);
+		}
 
 
 		// END YOUR CODE
@@ -53,11 +58,10 @@ public class RBTree<T extends Comparable<T>> {
 	public Node<T> search(Node.Interval<T> key) {
 		// TODO: Complete this method
 		// START YOUR CODE
-
-
-
-
-		return null;
+		if (root == null){
+			return null;
+		}
+		return root.search(key);
 		// END YOUR CODE
 	}
 
