@@ -88,7 +88,28 @@ public class Tokenizer {
          Hint: Character.isDigit() may be useful.
          */
         // ########## YOUR CODE STARTS HERE ##########
+        if (firstChar == '*')
+            currentToken = new Token("*", Token.Type.MUL);
 
+        if (firstChar == '/')
+            currentToken = new Token("/", Token.Type.DIV);
+
+        if (firstChar == '(')
+            currentToken = new Token("(", Token.Type.LBRA);
+
+        if (firstChar == ')')
+            currentToken = new Token(")", Token.Type.RBRA);
+
+        if (Character.isDigit(firstChar)){
+            int pos = 0;
+            while (pos < buffer.length() && Character.isDigit(buffer.charAt(pos))){
+                pos++;
+            }
+            currentToken = new Token(buffer.substring(0,pos), Token.Type.INT);
+        }
+
+        if (firstChar != '+' && firstChar != '-' && firstChar != '*' && firstChar != '/' && firstChar != '(' && firstChar != ')' && !Character.isDigit(firstChar))
+            throw new Token.IllegalTokenException("Character "+firstChar+" does not correlate to any token type is provided");
 
 
         // ########## YOUR CODE ENDS HERE ##########
