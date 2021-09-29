@@ -88,31 +88,23 @@ public class Parser {
          Hint 2: the possible grammar return '<term> + <exp>' correlates with the class (AddExp(term, exp)).
          */
         // ########## YOUR CODE STARTS HERE ##########
-
-        System.out.println("\nCall parseExp(), current() = "+tokenizer.current().toString());
-        System.out.println("  parseExp()-- term = parseTerm()");
         Exp term = parseTerm();
-
-        Token.Type type = tokenizer.current().getType();
-        if (type.equals(Token.Type.SUB)){
-            System.out.println("  parseExp()-- type.equals(Token.Type.SUB)");
+        if (tokenizer.hasNext() && tokenizer.current().getType().equals(Token.Type.SUB)){
             tokenizer.next();
-            System.out.println("  parseExp()-- tokenizer.next(), current() = "+tokenizer.current().toString());
-            System.out.println("  parseExp()-- Exp exp = parseExp();");
             Exp exp = parseExp();
-            System.out.println("  parseExp()-- RETURN SubExp("+term.show()+", "+exp.show()+")");
+            if (tokenizer.isLast() && tokenizer.current().getType().equals(Token.Type.RBRA)){
+                throw new IllegalProductionException("");
+            }
             return new SubExp(term, exp);
         }
-        if (type.equals(Token.Type.ADD)){
-            System.out.println("  parseExp()-- type.equals(Token.Type.ADD)");
+        if (tokenizer.hasNext() && tokenizer.current().getType().equals(Token.Type.ADD)){
             tokenizer.next();
-            System.out.println("  parseExp()-- tokenizer.next(), current() = "+tokenizer.current().toString());
-            System.out.println("  parseExp()-- Exp exp = parseExp();");
             Exp exp = parseExp();
-            System.out.println("  parseExp()-- RETURN AddExp("+term.show()+", "+exp.show()+")");
+            if (tokenizer.isLast() && tokenizer.current().getType().equals(Token.Type.RBRA)){
+                throw new IllegalProductionException("");
+            }
             return new AddExp(term, exp);
         }
-        System.out.println("  parseExp()-- RETURN term = "+term.show());
         return term; // Change this return (if you want). It is simply a placeholder to prevent an error.
         // ########## YOUR CODE ENDS HERE ##########
     }
@@ -130,32 +122,23 @@ public class Parser {
          Hint: you know that the first item will always be a factor (according to the grammar).
          */
         // ########## YOUR CODE STARTS HERE ##########
-
-        System.out.println("\nCall parseTerm(), current() = "+tokenizer.current().toString());
-        System.out.println("  parseTerm()-- factor = parseFactor()");
         Exp factor = parseFactor();
-
-        Token.Type type = tokenizer.current().getType();
-        if (type.equals(Token.Type.DIV)){
-            System.out.println("  parseTerm()-- type.equals(Token.Type.DIV");
+        if (tokenizer.hasNext() && tokenizer.current().getType().equals(Token.Type.DIV)){
             tokenizer.next();
-            System.out.println("  parseTerm()-- tokenizer.next(), current() = "+tokenizer.current().toString());
-            System.out.println("  parseTerm()-- Exp term = parseTerm();");
             Exp term = parseTerm();
-            System.out.println("  parseTerm()-- RETURN DivExp("+factor.show()+", "+term.show()+")");
+            if (tokenizer.isLast() && tokenizer.current().getType().equals(Token.Type.RBRA)){
+                throw new IllegalProductionException("");
+            }
             return new DivExp(factor, term);
         }
-        if (type.equals(Token.Type.MUL)){
-            System.out.println("  parseTerm()-- type.equals(Token.Type.MUL)");
+        if (tokenizer.hasNext() && tokenizer.current().getType().equals(Token.Type.MUL)){
             tokenizer.next();
-            System.out.println("  parseTerm()-- tokenizer.next(), current() = "+tokenizer.current().toString());
-            System.out.println("  parseTerm()-- Exp term = parseTerm();");
             Exp term = parseTerm();
-            System.out.println("  parseTerm()-- RETURN MultExp("+factor.show()+", "+term.show()+")");
+            if (tokenizer.isLast() && tokenizer.current().getType().equals(Token.Type.RBRA)){
+                throw new IllegalProductionException("");
+            }
             return new MultExp(factor, term);
         }
-
-        System.out.println("  parseTerm()-- RETURN factor = "+factor.show());
         return factor; // Change this return (if you want). It is simply a placeholder to prevent an error.
         // ########## YOUR CODE ENDS HERE ##########
     }
@@ -174,34 +157,26 @@ public class Parser {
          Fun fact: Integer.parseInt() is using a parser!
          */
         // ########## YOUR CODE STARTS HERE ##########
-
-        System.out.println("\nCall parseFactor(), current() = "+tokenizer.current().toString());
         if (tokenizer.current().getType().equals(Token.Type.INT)){
-            System.out.println("  parseFactor()-- tokenizer.current().getType().equals(Token.Type.INT)");
-            System.out.println("  parseFactor()-- RETURN IntExp("+Integer.parseInt(tokenizer.current().getToken())+")");
-            return new IntExp(Integer.parseInt(tokenizer.current().getToken()));
-        }
-        if (tokenizer.current().getType().equals(Token.Type.LBRA)){
-            System.out.println("  parseFactor()-- tokenizer.current().getType().equals(Token.Type.LBRA)");
+            Exp intExp = new IntExp(Integer.parseInt(tokenizer.current().getToken()));
             tokenizer.next();
-            System.out.println("  parseFactor()-- tokenizer.next(), current() = "+tokenizer.current().toString());
-            System.out.println("  parseFactor()-- Exp exp = parseExp();");
-            Exp exp = parseExp();
-            tokenizer.next(); // remove right bracket
-            System.out.println("  parseFactor()-- tokenizer.next(), current() = "+tokenizer.current().toString());
-            if (tokenizer.current().getType().equals(Token.Type.RBRA)){
-                System.out.println("  parseFactor()-- tokenizer.current().getType().equals(Token.Type.RBRA)");
-                System.out.println("  parseFactor()-- RETURN exp = "+exp.show());
-                return exp;
-            }else {
-                System.out.println("  parseFactor()-- THROW exception");
+            if (tokenizer.hasNext() && tokenizer.current().getType().equals(Token.Type.INT)){
                 throw new IllegalProductionException("");
             }
+            return intExp;
         }
-
-        tokenizer.next();
-        System.out.println("  parseFactor()-- tokenizer.next(), current() = "+tokenizer.current().toString());
-        System.out.println("  parseFactor()-- THROW exception");
+        if (tokenizer.current().getType().equals(Token.Type.LBRA)){
+            tokenizer.next();
+            if (!tokenizer.hasNext()){
+                throw new IllegalProductionException("");
+            }
+            Exp exp = parseExp();
+            if (!tokenizer.hasNext()){
+                throw new IllegalProductionException("");
+            }
+            tokenizer.next(); // remove right bracket
+            return exp;
+        }
         throw new IllegalProductionException("");
         // Change this return (if you want). It is simply a placeholder to prevent an error.
         // ########## YOUR CODE ENDS HERE ##########

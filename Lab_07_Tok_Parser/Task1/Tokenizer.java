@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Tokenizer {
     private String buffer;          // String to be transformed into tokens each time next() is called.
     private Token currentToken;     // The current token. The next token is extracted when next() is called.
+    private String lastBuffer;
 
     /**
      * To help you both test and understand what this tokenizer is doing, we have included a main method
@@ -63,6 +64,7 @@ public class Tokenizer {
      * save the token to {@code currentToken}.
      */
     public void next() {
+        lastBuffer = buffer;
         buffer = buffer.trim();     // remove whitespace
 
         if (buffer.isEmpty()) {
@@ -136,5 +138,14 @@ public class Tokenizer {
      */
     public boolean hasNext() {
         return currentToken != null;
+    }
+
+    public boolean isLast() {
+        if (currentToken == null){
+            return false;
+        }
+        Tokenizer pt_tokenizer = new Tokenizer(lastBuffer);
+        pt_tokenizer.next();
+        return !pt_tokenizer.hasNext();
     }
 }
