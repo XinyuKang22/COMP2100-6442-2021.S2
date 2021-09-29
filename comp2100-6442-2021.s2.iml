@@ -3,25 +3,7 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/Lab_01_Warmup" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Lab_02_DP" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Lab_03_Soft_Testing" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Lab_04_DataStructure" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Lab_05_DataStructure2/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/DAO" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Facade" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Factory_Method" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Iterator" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Observer" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Singleton" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/State" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Design_Pattern/Template Method" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/My_Practice/Q1" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Past_exam/Q2" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/PrepQuestionsMidTerm/Q3_New" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Real Mid Exam/task1" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Real Mid Exam/task2" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Lab_07_Tok_Parser/Task1" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Lecture_Parsing" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
