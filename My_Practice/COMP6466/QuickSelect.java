@@ -24,40 +24,35 @@ public class QuickSelect {
                 ys.add(Integer.parseInt(content[2]));
             }
         }
-        System.out.println(n);
-        System.out.println(weights);
-        System.out.println(xs);
-        System.out.println(ys);
 
-        float[] xMed = quickSelect(weights, xs, ys,0, n-1, 0, 0);
-        float[] yMed = quickSelect(weights, ys, xs,0, n-1, 0, 0);
+        String xMed = ""+quickSelect(weights, xs, ys,0, n-1, 0, 0);
+        String yMed = ""+quickSelect(weights, ys, xs,0, n-1, 0, 0);
+        System.out.println(xMed+" "+yMed);
 
-        System.out.println("");
-        float sumx = 0;
-        float sumy = 0;
-        for (int i = 0; i < n; i ++){
-            int x = xs.get(i);
-            int y = ys.get(i);
-            if (x <= xMed[1]){
-                sumx = sumx + weights.get(i);
-            }
-            if (y <= yMed[1]){
-                sumy = sumy + weights.get(i);
-            }
-        }
-        System.out.println("x median:");
-        System.out.println(xMed[0]);
-        System.out.println(xMed[1]);
-        System.out.println("y median:");
-        System.out.println(yMed[0]);
-        System.out.println(yMed[1]);
-        System.out.println("validation:");
-        System.out.println(sumx);
-        System.out.println(sumy);
+
+//        System.out.println("");
+//        float sumx = 0;
+//        float sumy = 0;
+//        for (int i = 0; i < n; i ++){
+//            int x = xs.get(i);
+//            int y = ys.get(i);
+//            if (x <= xMed){
+//                sumx = sumx + weights.get(i);
+//            }
+//            if (y <= yMed){
+//                sumy = sumy + weights.get(i);
+//            }
+//        }
+//        System.out.println("x median:");
+//        System.out.println(xMed);
+//        System.out.println("y median:");
+//        System.out.println(yMed);
+//        System.out.println("validation:");
+//        System.out.println(sumx);
+//        System.out.println(sumy);
     }
 
-    public static float[] quickSelect(ArrayList<Float> weightList, ArrayList<Integer> xList, ArrayList<Integer> yList,int p, int r, float leftSum, float rightSum){
-        float[] toReturn = new float[2];
+    public static int quickSelect(ArrayList<Float> weightList, ArrayList<Integer> xList, ArrayList<Integer> yList,int p, int r, float leftSum, float rightSum){
         if (p < r){
             float[] pivotResult = pivot(weightList, xList,yList, p, r);
             int q = Math.round(pivotResult[0]);
@@ -65,24 +60,16 @@ public class QuickSelect {
             float right = pivotResult[2];
             float mid = weightList.get(q);
             if (leftSum + left == rightSum + right || leftSum + left + mid== rightSum + right){
-                toReturn[0] = weightList.get(q);
-                toReturn[1] = xList.get(q);
-                System.out.println("quickselect return: "+toReturn[0]+", "+toReturn[1]);
-                return toReturn;
+                return xList.get(q);
             }else if (leftSum + left < rightSum + right && !(leftSum + left +mid >= rightSum + right)){
                 return quickSelect(weightList, xList,yList, q+1, r, leftSum+left+mid, rightSum);
             }else if (leftSum + left > rightSum + right && !(rightSum + right + mid >= leftSum + left)){
                 return quickSelect(weightList, xList,yList, p, q-1, leftSum, rightSum+right+mid);
             }else {
-                toReturn[0] = weightList.get(q);
-                toReturn[1] = xList.get(q);
-                System.out.println("quickselect return: "+toReturn[0]+", "+toReturn[1]);
-                return toReturn;
+                return xList.get(q);
             }
         }
-        toReturn[0] = weightList.get(r);
-        toReturn[1] = xList.get(r);
-        return toReturn;
+        return xList.get(r);
     }
 
     public static float[] pivot(ArrayList<Float> weightList, ArrayList<Integer> xList,ArrayList<Integer> yList, int p, int r){
