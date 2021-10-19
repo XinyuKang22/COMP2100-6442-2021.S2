@@ -35,31 +35,31 @@ public class QuoteFactory {
             case "sad":
                 return Quote.QuoteType.SAD;
             default:
-                return null;
+                throw new IllegalArgumentException();
         }
     }
 
-    /**
-     * String of tokens with space (' ') between tokens
-     * @param input String of tokens
-     * @return QuoteType[]
-     */
-    public Quote.QuoteType[] tokenizeString(String input) {
-        String[] split = input.split(" ");
-        Quote.QuoteType[] quoteTypes = new Quote.QuoteType[split.length];
-        for (int i = 0; i < quoteTypes.length; i++) {
-            quoteTypes[i] = tokenize(split[i]);
-        }
-        return quoteTypes;
-    }
+//    /**
+//     * String of tokens with space (' ') between tokens
+//     * @param input String of tokens
+//     * @return QuoteType[]
+//     */
+//    public Quote.QuoteType[] tokenizeString(String input) {
+//        String[] split = input.split(" ");
+//        Quote.QuoteType[] quoteTypes = new Quote.QuoteType[split.length];
+//        for (int i = 0; i < quoteTypes.length; i++) {
+//            quoteTypes[i] = tokenize(split[i]);
+//        }
+//        return quoteTypes;
+//    }
 
-    /**
-     * Checks whether the input string is the same as a given token
-     * @param s String input
-     * @param type QuoteType
-     * @return true if the tokenized string is of the given QuoteType
-     */
-    public boolean isStringQuoteType(String s, Quote.QuoteType type) {
-        return tokenize(s) == type;
-    }
+//    /**
+//     * Checks whether the input string is the same as a given token
+//     * @param s String input
+//     * @param type QuoteType
+//     * @return true if the tokenized string is of the given QuoteType
+//     */
+//    public boolean isStringQuoteType(String s, Quote.QuoteType type) {
+//        return tokenize(s) == type;
+//    }
 }

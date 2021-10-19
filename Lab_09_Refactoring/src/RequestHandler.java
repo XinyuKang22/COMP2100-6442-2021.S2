@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -15,24 +17,60 @@ import java.util.stream.Stream;
  * - QuoteFactory class field must be named quoteFactory (can be in either RequestHandler or QuoteHandler)
  */
 public class RequestHandler {
-    String[] valids = { "PHILOSOPHICAL", "MOTIVATIONAL", "DISCOURAGEMENT", "HAPPY", "SAD" };
-    public final QuoteHandler quoteHandler;
-    RequestHandler() {
-        quoteHandler = new QuoteHandler();
+
+    private QuoteHandler quoteHandler;
+    private static RequestHandler instance = null;
+
+    private RequestHandler() {
+        quoteHandler = QuoteHandler.getInstance();
     };
 
+    public static RequestHandler getInstance(){
+        if (instance == null){
+            instance = new RequestHandler();
+        }
+        return instance;
+    }
+
+    /**
+     * Get all quotes
+     * @return a list of quotes
+     */
     public String[] getQuotes() {
-        return Stream.of(QuoteHandler.get().toArray(new String[0])).toArray(String[]::new);
+        List<String> quoteList = new ArrayList<>();
+        for (Quote quote : quoteHandler.get()){
+            quoteList.add(quote.getQuote());
+        }
+        return quoteList.toArray(new String[0]);
     }
 
+    /**
+     * Get quotes in a specific type
+     * @param type quote type as a string
+     * @return a list of quotes of the type
+     */
     public String[] getQuotes(String type) {
-        return Arrays.asList(valids).contains(type.toUpperCase()) ? Stream.of(QuoteHandler.get(type).toArray(new String[0])).toArray(String[]::new) : new String[0];
+        List<String> quoteList = new ArrayList<>();
+        for (Quote quote : quoteHandler.get()){
+            if (quote.getType().toString().equalsIgnoreCase(type)){
+                quoteList.add(quote.getQuote());
+            }
+        }
+        return quoteList.toArray(new String[0]);
     }
 
+    /**
+     * Add a new quote, return true if succeed and return false if failed
+     * @param quote the quote content as a string
+     * @param type the quote type as a string
+     * @return true if succeed and false if failed
+     */
     public boolean addQuote(String quote, String type) {
-        if (!Arrays.asList(valids).contains(type.toUpperCase()))
+        try {
+            quoteHandler.add(quote, type);
+        } catch (Exception e){
             return false;
-        QuoteHandler.add(quote, type);
+        }
         return true;
     }
 }
