@@ -18,11 +18,11 @@ import java.util.stream.Stream;
  */
 public class RequestHandler {
 
-    private QuoteHandler quoteHandler;
+    private final QuoteHandler quoteHandler;
     private static RequestHandler instance = null;
 
     private RequestHandler() {
-        quoteHandler = QuoteHandler.getInstance();
+        quoteHandler = QuoteHandler.getNewInstance();
     };
 
     public static RequestHandler getInstance(){

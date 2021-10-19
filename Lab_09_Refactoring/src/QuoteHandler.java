@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class QuoteHandler {
 
-    private List<Quote> quoteStorage;
-    private QuoteFactory quoteFactory;
+    private final List<Quote> quoteStorage;
+    private final QuoteFactory quoteFactory;
     private static QuoteHandler instance = null;
 
     private QuoteHandler() {
@@ -30,6 +30,10 @@ public class QuoteHandler {
             instance = new QuoteHandler();
         }
         return instance;
+    }
+
+    public static QuoteHandler getNewInstance(){
+        return new QuoteHandler();
     }
 
     /**
