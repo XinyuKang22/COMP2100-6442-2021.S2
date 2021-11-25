@@ -18,11 +18,11 @@ public class Tokeniser {
         if (_buffer.isEmpty())
             return null;
 
-        // TODO: Complete this method
+        // TODO: Complete this method S := () ; S := )S( ; S := SS ;
         // START YOUR CODE
-
-
-
+        char c = _buffer.charAt(0);
+        if (c == '(') return new Token(Token.Type.LEFT_BRACKET, "(");
+        if (c == ')') return new Token(Token.Type.RIGHT_BRACKET, ")");
         // END YOUR CODE
 
         return null;

@@ -21,10 +21,15 @@ public class Tokeniser {
         if (_buffer.isEmpty())
             return null;
 
-        // TODO: Complete this method
+        // TODO: Complete this method   X := + | - | * | / ; Y := 1 | 2 | 3 | 5 | 6 | 7 | 8 | 9 | 0 ; S := YXS | Y ;
         // hints: you might want to use Character.isDigit(...) to check if a character is digit
         // START YOUR CODE
-
+        char c = _buffer.charAt(0);
+        if (MATH_OPERATIONS.contains(c)){
+            return new Token(Token.Type.MATH_OPERATION, c+"");
+        } else if (Character.isDigit(c)){
+            return new Token(Token.Type.NUMBER, c+"");
+        }
 
 
         // END YOUR CODE

@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,6 +13,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * IMPORTANT: This class is incomplete. Please look for "TODO" comments.
@@ -115,9 +118,54 @@ public class XMLTable {
 
 		// TODO: Complete this method
 		// START YOUR CODE
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document d = db.parse(f); //parse file f, it is the root of the document tree
+			d.getDocumentElement().normalize();
+			Node customersEle = d.getFirstChild();
+			NodeList nl = customersEle.getChildNodes();
 
-		
+			for(int i = 0; i < nl.getLength(); i++)
+			{
+				Node n = nl.item(i);
 
+				if(n.getNodeType() == Node.ELEMENT_NODE) {
+					Element element		= (Element) n;
+					String name = null;
+					String address = null;
+					String city = null;
+					String postcode = null;
+					String country = null;
+
+					int id = Integer.parseInt(element.getElementsByTagName(Customer.KEY_ID).item(0).getTextContent());
+					if (element.getElementsByTagName(Customer.KEY_NAME).item(0) != null){
+						name = element.getElementsByTagName(Customer.KEY_NAME).item(0).getTextContent();
+						if (Objects.equals(name, "null")) name = null;
+					}
+					if (element.getElementsByTagName(Customer.KEY_ADDRESS).item(0) != null){
+						address = element.getElementsByTagName(Customer.KEY_ADDRESS).item(0).getTextContent();
+						if (Objects.equals(address, "null")) address = null;
+					}
+					if (element.getElementsByTagName(Customer.KEY_CITY).item(0) != null){
+						city = element.getElementsByTagName(Customer.KEY_CITY).item(0).getTextContent();
+						if (Objects.equals(city, "null")) city = null;
+					}
+					if (element.getElementsByTagName(Customer.KEY_POSTCODE).item(0) != null){
+						postcode = element.getElementsByTagName(Customer.KEY_POSTCODE).item(0).getTextContent();
+						if (Objects.equals(postcode, "null")) postcode = null;
+					}
+					if (element.getElementsByTagName(Customer.KEY_COUNTRY).item(0) != null){
+						country = element.getElementsByTagName(Customer.KEY_COUNTRY).item(0).getTextContent();
+						if (Objects.equals(country, "null")) country = null;
+					}
+					Customer customer = new Customer(id, name, address, city, postcode, country);
+					customers.add(customer);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// END YOUR CODE
 
 		return customers;
@@ -134,7 +182,9 @@ public class XMLTable {
 		// START YOU CODE
 		// HINT: insert the given customer to the XML file.
 		// You can call the load() and save() methods
-		
+		List<Customer> customers = load(tableName);
+		customers.add(customer);
+		save(tableName, customers);
 
 		
 		// END YOUR CODE

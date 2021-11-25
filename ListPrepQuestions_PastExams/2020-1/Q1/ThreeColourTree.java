@@ -35,10 +35,14 @@ public class ThreeColourTree<T extends Comparable<T>> {
 	 */
 	public Boolean testProp1() {
 		//START YOUR CODE
-		
-		return null;
-		
+		return testProp1Helper(root);
 		//END YOUR CODE
+	}
+
+	public Boolean testProp1Helper(Node node) {
+		if (node == null) return true;
+		if (!(node.colour == Colour.PINK || node.colour == Colour.PURPLE || node.colour == Colour.MAGENTA)) return false;
+		return testProp1Helper(node.left) && testProp1Helper(node.right);
 	}
 
 	/**
@@ -49,9 +53,11 @@ public class ThreeColourTree<T extends Comparable<T>> {
 	 */
 	public Boolean testProp2() {
 		//START YOUR CODE
-		
-		return null;
-		
+		if (root.colour != Colour.PINK) return false;
+		for (Node leaf:root.childrenLeaves()){
+			if (leaf.colour != Colour.PINK) return false;
+		}
+		return true;
 		//END YOUR CODE
 	}
 
@@ -63,8 +69,14 @@ public class ThreeColourTree<T extends Comparable<T>> {
 	 */
 	public Boolean testProp3() {
 		//START YOUR CODE
-		
-		return null;
+		if (root.value == null) return true;
+		List<Node<T>> leaves = root.childrenLeaves();
+		//if (leaves.isEmpty()) return false;
+		int count = leaves.get(0).colorCount(Colour.PINK);
+		for (Node leaf:leaves){
+			if (count != leaf.colorCount(Colour.PINK)) return false;
+		}
+		return true;
 		
 		//END YOUR CODE
 	}
@@ -78,9 +90,18 @@ public class ThreeColourTree<T extends Comparable<T>> {
 	public Boolean testProp4() {
 		//START YOUR CODE
 		
-		return null;
+		return testProp4Helper(root);
 		
 		//END YOUR CODE
+	}
+
+	public Boolean testProp4Helper(Node node) {
+		if (node.value == null) return true;
+		if (node.colour == Colour.MAGENTA){
+			if (node.left.colour == Colour.MAGENTA || node.right.colour == Colour.MAGENTA) return false;
+			if (node.left.colour != Colour.PURPLE && node.right.colour != Colour.PURPLE) return false;
+		}
+		return testProp4Helper(node.left) && testProp4Helper(node.right);
 	}
 	
 	//HINT: testProp5() has been implemented.

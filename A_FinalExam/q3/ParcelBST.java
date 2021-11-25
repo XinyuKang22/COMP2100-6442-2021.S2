@@ -37,8 +37,12 @@ public class ParcelBST extends BinarySearchTree<Parcel> implements Iterable<Parc
 
 
         // You may add methods and variables here if you wish
+        ParcelBST parcelBST = new ParcelBST(value, new ParcelBST(leftNode), new ParcelBST(rightNode));
+        ParcelBST currentBST = parcelBST;
+        List<Parcel> parcelList = new ArrayList<>();
 
         public IteratorPreOrder() {
+            preorderTreeWalk(parcelBST, parcelList);
             // You may add code here if you wish
         }
 
@@ -46,8 +50,7 @@ public class ParcelBST extends BinarySearchTree<Parcel> implements Iterable<Parc
         public boolean hasNext() {
             // TODO
             // START YOUR CODE
-
-            return false;
+            return !parcelList.isEmpty();
             // END YOUR CODE
         }
 
@@ -55,9 +58,23 @@ public class ParcelBST extends BinarySearchTree<Parcel> implements Iterable<Parc
         public Parcel next() {
             // TODO
             // START YOUR CODE
-
+            if (!parcelList.isEmpty()){
+                Parcel p = parcelList.get(0);
+                parcelList.remove(0);
+                return p;
+            }
             return null;
             // END YOUR CODE
         }
+
+        private void preorderTreeWalk(ParcelBST bst,List<Parcel> parcelList) {
+            if (bst != null && !bst.isEmpty()){
+                parcelList.add(bst.value);
+                if (!bst.leftNode.isEmpty()) preorderTreeWalk(new ParcelBST(bst.leftNode), parcelList);
+                if (!bst.rightNode.isEmpty()) preorderTreeWalk(new ParcelBST(bst.rightNode), parcelList);
+            }
+        }
+
+
     }
 }

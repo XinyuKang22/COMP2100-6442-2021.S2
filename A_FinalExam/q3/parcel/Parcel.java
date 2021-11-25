@@ -47,7 +47,18 @@ public class Parcel implements Comparable<Parcel> {
 	public int compareTo(Parcel other) {
 		// TODO
 		// START YOUR CODE
-
+		CartesianCoordinate tSenderLoc = this.sender.getLocation();
+		CartesianCoordinate tReceipLoc = this.recipient.getLocation();
+		CartesianCoordinate oSenderLoc = other.sender.getLocation();
+		CartesianCoordinate oReceipLoc = other.recipient.getLocation();
+		CartesianCoordinate warehouse = new CartesianCoordinate(105, 15);
+		double tDis = tSenderLoc.getDistance(warehouse) + tReceipLoc.getDistance(warehouse);
+		double oDis = oSenderLoc.getDistance(warehouse) + oReceipLoc.getDistance(warehouse);
+		if (oDis < tDis){
+			return 1;
+		} else if (oDis > tDis){
+			return -1;
+		}
 		return 0;
 		// END YOUR CODE
 	}

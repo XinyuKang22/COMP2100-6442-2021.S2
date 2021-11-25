@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -19,7 +20,9 @@ public class SomethingTest {
 	public void test() {
 		// Implement your test cases
 		// START YOUR CODE
-
+		Assert.assertEquals(0, Something.someMethod(1,1,1,1));
+		Assert.assertEquals(228, Something.someMethod(36,36,30,45));
+		Assert.assertEquals(293, Something.someMethod(36,72,100,85));
 
 		// END YOUR CODE
 	}

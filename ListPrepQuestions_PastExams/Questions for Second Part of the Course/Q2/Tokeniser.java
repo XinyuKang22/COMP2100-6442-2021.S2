@@ -20,7 +20,9 @@ public class Tokeniser {
 
         // TODO: Complete this method
         // START YOUR CODE
-
+        char c = _buffer.charAt(0);
+        if (c == '(') return new Token(Token.Type.LEFT_BRACKET, "(");
+        if (c == ')') return new Token(Token.Type.RIGHT_BRACKET, ")");
 
 
         // END YOUR CODE

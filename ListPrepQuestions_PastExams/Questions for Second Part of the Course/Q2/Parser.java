@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * IMPORTANT: This class is incomplete. Please look for "TODO" comments.
  *
@@ -23,12 +26,43 @@ public class Parser {
 
 		// TODO: Complete this method
 		// START YOUR CODE
-
-
-
+		List<Token.Type> typeList = new ArrayList<>();
+		while (true){
+			Token t = _tokeniser.takeNext();
+			if (t == null){
+				if (!_tokeniser.isNextValid()) {
+					return false;
+				} else {
+					break;
+				}
+			} else {
+				typeList.add(t.type);
+			}
+		}
 		// END YOUR CODE
+		return isValid(typeList);
+    }
+
+	public boolean isValid(List<Token.Type> typeList){//S := () ; S := (S) ; S := SS ;
+		if (typeList.size() < 2) return false;
+		if (typeList.get(0) == Token.Type.LEFT_BRACKET){
+			if (typeList.get(1) == Token.Type.RIGHT_BRACKET){
+				if (typeList.size() == 2) return true;
+				return isValid(typeList.subList(2, typeList.size()));
+			} else {
+				if (typeList.get(typeList.size()-1) != Token.Type.RIGHT_BRACKET) return false;
+				for (int i = typeList.size()-1; i >= 3; i --){
+					if (i == typeList.size()-1) {
+						if (isValid(typeList.subList(1,i)))	return true;
+					}
+					if (typeList.get(i) == Token.Type.RIGHT_BRACKET){
+						if (isValid(typeList.subList(1, i)) && isValid(typeList.subList(i+1,typeList.size()))) return true;
+					}
+				}
+			}
+		}
 
 		return false;
-    }
+	}
 
 }

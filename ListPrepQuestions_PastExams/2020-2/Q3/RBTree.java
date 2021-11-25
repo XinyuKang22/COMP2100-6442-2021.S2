@@ -178,7 +178,7 @@ public class RBTree<K extends Comparable<K>, T> {
 	/**
 	 * Demo functions (Safely) insert a value into the tree
 	 *
-	 * @param value T The value of the new node being inserted.
+	 * @param data T The value of the new node being inserted.
 	 */
 	public void insert(K key, T data) {
 		Node<K, T> node = new Node<K, T>(key, data);
@@ -283,11 +283,42 @@ public class RBTree<K extends Comparable<K>, T> {
 		List<Node> ret = new LinkedList<>();
 
 		// ########## YOUR CODE STARTS HERE ##########
-		
-
-
+		if (root == null || root.key == null) return ret;
+		List<Node> oneLevel = new LinkedList<>();
+		oneLevel.add(root);
+		while (!oneLevel.isEmpty()){
+			ret.addAll(oneLevel);
+			oneLevel = oneLevelTraversal(oneLevel);
+		}
 		// ########## YOUR CODE ENDS HERE ##########
 
 		return ret;
 	}
+
+	public List<Node> oneLevelTraversal(List<Node> nodes){
+		List<Node> ret = new LinkedList<>();
+		for (Node node:nodes){
+			if (node.right.key!=null){
+				ret.add(node.right);
+			}
+			if (node.left.key!=null){
+				ret.add(node.left);
+			}
+		}
+		return ret;
+	}
+
+//	public static void main(String[] args) {
+//		RBTree tree = new RBTree();
+//		tree.insert(new Node(33,""));
+//		tree.insert(new Node(11,""));
+//		tree.insert(new Node(88,""));
+//		tree.insert(new Node(10,""));
+//		tree.insert(new Node(16,""));
+//		tree.insert(new Node(43,""));
+//		List<Node> levelTraverse = tree.levelTraversal();
+//		for (Node node:levelTraverse){
+//			System.out.println(node.key);
+//		}
+//	}
 }

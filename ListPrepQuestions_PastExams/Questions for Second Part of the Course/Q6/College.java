@@ -1,5 +1,16 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -32,12 +43,24 @@ public class College {
 	public static College loadFromJsonFile(File file) {
 
 		// START YOUR CODE
+		Gson gson = new Gson();
+		JsonReader jsonReader = null;
 
+		final Type CUS_LIST_TYPE = new TypeToken<College>() {}.getType();
+		//or TypeToken.getParameterized(ArrayList.class, PersonJSON.class).getType();
+
+		try{
+			jsonReader = new JsonReader(new FileReader(file));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		assert jsonReader != null;
+		return gson.fromJson(jsonReader, CUS_LIST_TYPE);
 
 
 		// END YOUR CODE
 
-		return null;
+		//return null;
 	}
 
 	/**
@@ -48,8 +71,18 @@ public class College {
 	public void mergeStudents() {
 
 		// START YOUR CODE
-
-
+		Map<String, List<String>> studentMap = new HashMap<>();
+		for (Student student:students){
+			if (studentMap.containsKey(student.getName())){
+				studentMap.get(student.getName()).addAll(student.getCourses());
+			} else {
+				studentMap.put(student.getName(), student.getCourses());
+			}
+		}
+		students.clear();
+		for (Map.Entry<String, List<String>> entry:studentMap.entrySet()){
+			students.add(new Student(entry.getKey(), entry.getValue()));
+		}
 
 		// END YOUR CODE
 	}
@@ -62,7 +95,14 @@ public class College {
 	public void saveToJsonFile(File file) {
 
 		// START YOUR CODE
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+		try(FileWriter fw = new FileWriter(file)){
+			gson.toJson(this, fw);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 
 
 		// END YOUR CODE

@@ -11,6 +11,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class Executor {
 
@@ -53,7 +56,25 @@ public class Executor {
 
 			// TODO
 			// ########## YOUR CODE STARTS HERE ##########
+			Element rootElement = doc.createElement("employees");
+			doc.appendChild(rootElement);
+			for (Employee employee:employees){
+				Element employeeEle = doc.createElement("employee");
+				Element nameEle = doc.createElement("name");
+				nameEle.appendChild(doc.createTextNode(employee.getName()));
+				Element genderEle = doc.createElement("gender");
+				genderEle.appendChild(doc.createTextNode(employee.getGender()));
+				Element salaryEle = doc.createElement("salary");
+				salaryEle.appendChild(doc.createTextNode(employee.getSalary()+""));
+				Element departmentEle = doc.createElement("department");
+				departmentEle.appendChild(doc.createTextNode(employee.getDepartment()));
+				employeeEle.appendChild(nameEle);
+				employeeEle.appendChild(genderEle);
+				employeeEle.appendChild(salaryEle);
+				employeeEle.appendChild(departmentEle);
 
+				rootElement.appendChild(employeeEle);
+			}
 			// ########## YOUR CODE ENDS HERE ##########
 
 			Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -98,7 +119,18 @@ public class Executor {
 
 			// TODO
 			// ########## YOUR CODE STARTS HERE ##########
-
+			NodeList nl = doc.getElementsByTagName("employee");
+			for(int i = 0; i < nl.getLength(); i++){
+				Node n = nl.item(i);
+				if(n.getNodeType() == Node.ELEMENT_NODE){
+					Element element = (Element) n;
+					String name = element.getElementsByTagName("name").item(0).getTextContent();
+					String gender = element.getElementsByTagName("gender").item(0).getTextContent();
+					String salary = element.getElementsByTagName("salary").item(0).getTextContent();
+					String department = element.getElementsByTagName("department").item(0).getTextContent();
+					employees.add(new Employee(name, gender, Integer.parseInt(salary), department));
+				}
+			}
 			// ########## YOUR CODE ENDS HERE ##########
 
 			this.db.save(lc.getKey(), employees);

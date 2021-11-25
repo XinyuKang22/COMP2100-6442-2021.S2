@@ -25,7 +25,15 @@ public class Parser {
 
         // TODO: Complete this method
 		// START YOUR CODE
-
+		if (_tokeniser.takeNext().type == Token.Type.NUMBER){
+			if (!_tokeniser.isNextValid()) return false;
+			if (!_tokeniser.hasNext()) return true;
+			if (_tokeniser.next().type == Token.Type.MATH_OPERATION){
+				_tokeniser.takeNext();
+				if (!_tokeniser.hasNext()) return false;
+				return parseExp();
+			}
+		}
 
 
 		// END YOUR CODE

@@ -1,4 +1,17 @@
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +50,47 @@ public class StudentCollection {
 	 */
 	public void saveToFile(File file) {
 		//START YOUR CODE
-		
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+		try {
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document d = db.newDocument();
+
+			Element rootElement = d.createElement("StudentCollection");
+			d.appendChild(rootElement);
+			for(Student student : students)
+			{
+				Element studentElement = d.createElement("Student");
+				studentElement.setAttribute("name", student.getName());
+				studentElement.setAttribute("age", (student.getAge() == null) ? "":student.getAge().toString());
+				studentElement.setAttribute("height", (student.getHeight() == null) ? "":student.getHeight().toString());
+				studentElement.setAttribute("weight", (student.getWeight() == null) ? "":student.getWeight().toString());
+
+				Element coursesElement = d.createElement("courses");
+				if (student.getCourses() != null){
+					for (Course course:student.getCourses()){
+						Element courseEle = d.createElement("Course");
+						courseEle.setAttribute("name", course.getName());
+						courseEle.setAttribute("grade", course.getGrade().toString());
+						coursesElement.appendChild(courseEle);
+					}
+					studentElement.appendChild(coursesElement);
+				}
+
+				rootElement.appendChild(studentElement);
+			}
+
+			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(d);
+			StreamResult result = new StreamResult(file);
+			transformer.transform(source, result);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		//END YOUR CODE
 	}
 
@@ -49,7 +102,44 @@ public class StudentCollection {
 	 */
 	public static StudentCollection loadFromFile(File file) {
 		//START YOUR CODE
-		
+		List<Student> studentsNew = new ArrayList<>();
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document d = db.parse(file);
+			d.getDocumentElement().normalize();
+
+			NodeList nl = d.getElementsByTagName("Student");
+			for(int i = 0; i < nl.getLength(); i++) {
+				Student student = new Student();
+				Node n = nl.item(i);
+				if(n.getNodeType() == Node.ELEMENT_NODE) {
+					Element studentElement		= (Element) n;
+					student.withName(studentElement.getAttribute("name"));
+					if (!studentElement.getAttribute("age").equals("")) student.withAge(Integer.parseInt(studentElement.getAttribute("age")));
+					if (!studentElement.getAttribute("height").equals("")) student.withHeight(Integer.parseInt(studentElement.getAttribute("height")));
+					if (!studentElement.getAttribute("weight").equals("")) student.withWeight(Integer.parseInt(studentElement.getAttribute("weight")));
+
+					NodeList courseNL = studentElement.getElementsByTagName("Course");
+					for (int j = 0; j < courseNL.getLength(); j++){
+						Node node = courseNL.item(j);
+						if (node.getNodeType() == Node.ELEMENT_NODE){
+							Element course = (Element) node;
+							String courseName = course.getAttribute("name");
+							Integer grade = Integer.parseInt(course.getAttribute("grade"));
+							student.addCourse(new Course(courseName, grade));
+						}
+					}
+
+					studentsNew.add(student);
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return new StudentCollection(studentsNew);
 		//END YOUR CODE
 	}
 
@@ -65,5 +155,12 @@ public class StudentCollection {
 		}
 
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "StudentCollection{" +
+				"students=" + students +
+				'}';
 	}
 }

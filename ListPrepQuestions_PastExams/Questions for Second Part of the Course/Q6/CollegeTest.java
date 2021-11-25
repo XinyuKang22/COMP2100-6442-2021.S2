@@ -13,9 +13,9 @@ import org.junit.Test;
  *
  */
 public class CollegeTest {
-
-	private static final String JSON_FILE = "college.json";
-	private static final String PROCESSED_JSON_FILE = "college_processed.json";
+	private static final String PREFIX = "C:/Users/10441/IdeaProjects/comp2100-6442-2021.s2/ListPrepQuestions_PastExams/Questions for Second Part of the Course/Q6/";
+	private static final String JSON_FILE = PREFIX+"college.json";
+	private static final String PROCESSED_JSON_FILE = PREFIX+"college_processed.json";
 	private static final String COLLEGE_NAME = "Computer Science";
 
 	@Test

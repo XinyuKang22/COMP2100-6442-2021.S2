@@ -25,7 +25,12 @@ public class Tokeniser {
         // hints: you might want to use Character.isDigit(...) to check if a character is digit;
         // then use Integer.parseInt(...) to parse it from string to a number.
         // START YOUR CODE
-
+        char c = _buffer.charAt(0);
+        if (MATH_OPERATIONS.contains(c)){
+            return new Token(Token.Type.MATH_OPERATION, c+"");
+        } else if (Character.isDigit(c) && Integer.parseInt(c+"")%2==0){
+            return new Token(Token.Type.EVEN_NUMBER, c+"");
+        }
 
 
         // END YOUR CODE

@@ -15,9 +15,9 @@ import org.junit.Test;
  *
  */
 public class CompanyTest {
-	
-	private static final String JSON_FILE = "company.json";
-	private static final String PROCESSED_JSON_FILE = "company_processed.json";
+	private static final String PREFIX = "C:/Users/10441/IdeaProjects/comp2100-6442-2021.s2/ListPrepQuestions_PastExams/Questions for Second Part of the Course/Q8/";
+	private static final String JSON_FILE = PREFIX+"company.json";
+	private static final String PROCESSED_JSON_FILE = PREFIX+"company_processed.json";
 	private static final String COMPANY_NAME = "ACT Software";
 
 	@Test

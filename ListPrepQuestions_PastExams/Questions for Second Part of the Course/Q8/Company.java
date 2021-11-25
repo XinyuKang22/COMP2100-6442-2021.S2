@@ -1,9 +1,14 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -37,12 +42,22 @@ public class Company {
 	public static Company loadFromJsonFile(File file) {
 
 		// START YOUR CODE
+		Gson gson = new Gson();
+		JsonReader jsonReader = null;
 
+		final Type CUS_LIST_TYPE = new TypeToken<Company>() {}.getType();
+		//or TypeToken.getParameterized(ArrayList.class, PersonJSON.class).getType();
+
+		try{
+			jsonReader = new JsonReader(new FileReader(file));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return gson.fromJson(jsonReader, CUS_LIST_TYPE);
 
 
 		// END YOUR CODE
-
-		return null;
 	}
 	/**
 	 * Implement this method to serialize this company into the given file
@@ -52,7 +67,16 @@ public class Company {
 	public void serializeToFile(File file) {
 
 		// START YOUR CODE
-
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file)))
+		{
+			oos.writeObject(this.name);
+			oos.writeInt(this.employees.size());
+			for (Employee employee:employees){
+				oos.writeObject(employee);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 
 		// END YOUR CODE
@@ -85,7 +109,14 @@ public class Company {
 	public void saveToJsonFile(File file) {
 
 		// START YOUR CODE
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+		try(FileWriter fw = new FileWriter(file)){
+			gson.toJson(this, fw);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 
 
 		// END YOUR CODE
@@ -98,8 +129,13 @@ public class Company {
 	 */
 	public void removeEmployeesWhoDoNotKnowJava() {
 		// START YOUR CODE
-
-
+		List<Employee> list = new ArrayList<>();
+		for (Employee employee:employees){
+			if (employee.getSkills().contains("Java")){
+				list.add(employee);
+			}
+		}
+		employees = list;
 
 		// END YOUR CODE
 	}
